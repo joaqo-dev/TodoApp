@@ -1,13 +1,104 @@
-body {
+
+:root {
+  --primary-color: #0cd0ee; 
+  --secondary-color: #0ab1ca; 
+  --background-color: #121212; 
+  --text-color: #e0e0e0; 
+}
+* {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat';
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+  background-color: var(--background-color);;
+  color:var(--text-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+h1 {
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 20px;
+  color: var(--primary-color);
+}
+
+input {
+  background-color: #1e1e1e;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  width: 100%;
+  color: var(--text-color);
+  margin-bottom: 20px;
+  outline: none;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+
+.create-todo-button {
+  position: fixed;
+  bottom: 20px;  
+  right: 20px;   
+  width: 60px;
+  height: 60px;
+  border-radius: 50%; 
+  border: none;
+  background-color: var(--primary-color); 
+  color: var(--background-color); 
+  font-size: 2rem; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3); 
+  transition: background-color 0.3s ease; 
+}
+
+.create-todo-button:hover {
+  background-color: var(--secondary-color); 
+}
+
+.todo-item {
+  background-color: #1e1e1e; 
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; 
+}
+
+.todo-item p {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--text-color); 
+}
+
+.todo-item span {
+  font-size: 1.5rem; 
+  color: var(--primary-color);
+  cursor: pointer;
+}
+
+.todo-item:hover {
+  transform: scale(1.05); 
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.4); 
+}
+
+.completed {
+  text-decoration: line-through; 
+  color: var(--secondary-color); 
+  opacity: 0.3; 
 }
