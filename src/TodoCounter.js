@@ -1,9 +1,9 @@
 
 function TodoCounter({total, completed}){
     return(
-      <h1> 
-        Has completado {completed} de {total} TODOs 
-      </h1>
+      completed==total 
+      ? <h1> Felicidades!! completaste tus {total} TODOs!!</h1>
+      : <h1> Has completado {completed} de {total} TODOs </h1>
     )
   }
 

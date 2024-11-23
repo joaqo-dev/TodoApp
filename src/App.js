@@ -6,29 +6,70 @@ import { CreateTodoButton } from './CreateTodoButton';
 import { TodoItem } from './TodoItem';
 
 
-const defaultTodos = [
-  {id: 1, text: 'Cortar cebolla', completed: true},
-  {id: 2, text: 'Tomar curso de react ', completed: false},
-  {id: 3, text: 'Culiarse a la llorona', completed: false},
-  {id: 4, text: 'Matar una puta', completed: false},
-  {id: 5, text: 'Estudiar', completed: true},
-]
+ 
+//localStorage.removeItem('TODOS_V1');
 
+function useLocalStorage(itemName, initialValue) {
+  
+
+  const localStorageItem = localStorage.getItem(itemName);
+
+  let parsedItem;
+
+  if (!localStorageItem){
+    localStorage.setItem(itemName, JSON.stringify(initialValue));
+    parsedItem = [];
+  }else{
+    parsedItem = JSON.parse(localStorageItem);
+  }
+
+  const[item, setItem] = React.useState(parsedItem);
+
+  const saveItem = (newItem) => {
+    localStorage.setItem(itemName, JSON.stringify(newItem))
+    setItem(newItem)
+  };
+
+  return [item, saveItem ]
+}
 
 function App() {
-  const [todos, setTodos] = React.useState(defaultTodos)
+  
+  //Tener la lista de todos como un estado para que se pueda actualizar
+  const [todos, saveTodos] = useLocalStorage('TODOS_V1', [])
+   
+  // Buscar el valor ingresado en el imput
+  const [searchValue, setSearchValue] = React.useState('');
+
+
+  // Contar tareas completadas y totales
   const completedTodos = todos.filter(todos => !!todos.completed === true).length;
   const totalTodos = todos.length;
-  const [searchValue, setSearchValue] = React.useState('');
-    console.log('los usuarios buscar ToDos de '+searchValue);
+
+ 
+  // Filtrar los todos por el valor de búsqueda
   const searchedTodos = todos.filter(
     (todo) => {
       const todoText = todo.text.toLowerCase()
       const searchText = searchValue.toLowerCase()
       return todoText.includes(searchText)}
   )
+
   
 
+  // Alternar el estado de completado de un todo
+  const completeTodo = (id) => {
+    const newTodos = [...todos];
+    const todoIndex = newTodos.findIndex(todo => todo.id === id);
+    newTodos[todoIndex].completed = !newTodos[todoIndex].completed; 
+    saveTodos(newTodos);
+  };
+
+  // Borrar un todo
+  const deleteTodo = (id) => {
+    const newTodos = todos.filter(todo => todo.id !== id); 
+    saveTodos(newTodos);
+  };
 
   return (
     <>
@@ -43,7 +84,12 @@ function App() {
           <TodoItem 
             key={todo.id} 
             text={todo.text}
-            completed={todo.completed} />
+            completed={todo.completed} 
+            onCompleted={() => completeTodo(todo.id)}
+            onDelete={() => deleteTodo(todo.id)}
+            />
+            
+
         ))}
       </TodoList>
       

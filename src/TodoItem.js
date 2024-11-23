@@ -1,9 +1,13 @@
-function TodoItem({ text, completed }) {
+import { FaCheck } from "react-icons/fa";
+import { FiDelete } from "react-icons/fi";
+
+function TodoItem({ text, completed, onCompleted, onDelete }) {
   return (
     <li className="todo-item">
-      <span>✔</span>
+      <FaCheck color={completed ? '#0cd0ee' : 'gray'} onClick={onCompleted}
+    ></FaCheck>
       <p className={completed ? 'completed' : ''}>{text}</p>
-      <span>❌</span>
+      <FiDelete color='red' size= '30px'  onClick={onDelete}></FiDelete>
     </li>
   );
 }
