@@ -1,42 +1,21 @@
 import React from 'react';
-import { TodoCounter } from './TodoCounter';
-import { TodoSearch } from './TodoSearch';
-import { TodoList } from './TodoList';
-import { CreateTodoButton } from './CreateTodoButton';
-import { TodoItem } from './TodoItem';
-
+import { TodoCounter } from './components/TodoCounter';
+import { TodoSearch } from './components/TodoSearch';
+import { TodoList } from './components/TodoList';
+import { CreateTodoButton } from './components/CreateTodoButton';
+import { TodoItem } from './components/TodoItem';
+import { useLocalStorage } from './customHook/useLocalStorage';
+import BeatLoader from "react-spinners/BeatLoader"
 
  
 //localStorage.removeItem('TODOS_V1');
 
-function useLocalStorage(itemName, initialValue) {
-  
 
-  const localStorageItem = localStorage.getItem(itemName);
-
-  let parsedItem;
-
-  if (!localStorageItem){
-    localStorage.setItem(itemName, JSON.stringify(initialValue));
-    parsedItem = [];
-  }else{
-    parsedItem = JSON.parse(localStorageItem);
-  }
-
-  const[item, setItem] = React.useState(parsedItem);
-
-  const saveItem = (newItem) => {
-    localStorage.setItem(itemName, JSON.stringify(newItem))
-    setItem(newItem)
-  };
-
-  return [item, saveItem ]
-}
 
 function App() {
   
   //Tener la lista de todos como un estado para que se pueda actualizar
-  const [todos, saveTodos] = useLocalStorage('TODOS_V1', [])
+  const {item:todos, saveItem:saveTodos, loading, error} = useLocalStorage('TODOS_V1', [])
    
   // Buscar el valor ingresado en el imput
   const [searchValue, setSearchValue] = React.useState('');
@@ -45,6 +24,7 @@ function App() {
   // Contar tareas completadas y totales
   const completedTodos = todos.filter(todos => !!todos.completed === true).length;
   const totalTodos = todos.length;
+
 
  
   // Filtrar los todos por el valor de búsqueda
@@ -65,6 +45,7 @@ function App() {
     saveTodos(newTodos);
   };
 
+
   // Borrar un todo
   const deleteTodo = (id) => {
     const newTodos = todos.filter(todo => todo.id !== id); 
@@ -80,6 +61,10 @@ function App() {
       />
 
       <TodoList>
+        {loading && <BeatLoader color='#0cd0ee' />}
+        {error && <p>Hubo un error!!</p>}
+        {(!loading && searchedTodos.lenght === 0) && <p>Crea tu primer ToDo! </p>}
+
         {searchedTodos.map(todo => (
           <TodoItem 
             key={todo.id} 
