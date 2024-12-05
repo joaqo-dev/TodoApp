@@ -7,13 +7,14 @@ import { TodoItem } from './components/TodoItem';
 import BeatLoader from "react-spinners/BeatLoader"
 import { TodoContext } from './components/TodoContext';
 import { Modal } from './components/Modal';
+import { TodoForm } from './components/TodoForm'
  
 //localStorage.removeItem('TODOS_V1');
 
 
 
 function App() {
-  const {loading, error, searchedTodos, completeTodo, deleteTodo, openModal, setOpenModal} = useContext(TodoContext);
+  const {loading, searchedTodos, completeTodo, deleteTodo, openModal, setOpenModal, addTodo} = useContext(TodoContext);
 
   return (
     <>
@@ -21,8 +22,7 @@ function App() {
       <TodoSearch />
       <TodoList>
         {loading && <BeatLoader color='#0cd0ee' />}
-        {error && <p>Hubo un error!!</p>}
-        {(!loading && searchedTodos.length === 0) && <p>Crea tu primer ToDo! </p>}
+        {(!loading && searchedTodos.length === 0) && <p>ToDo App del kako! </p>}
 
         {searchedTodos.map(todo => (
           <TodoItem 
@@ -34,11 +34,11 @@ function App() {
           />
         ))}
       </TodoList>
-      <CreateTodoButton/>
+      <CreateTodoButton setOpenModal={setOpenModal}/>
 
       {openModal && (
         <Modal>
-          la funcionalidad de agregar todo
+          <TodoForm addTodo={addTodo} setOpenModal={setOpenModal}/>
         </Modal>
       )}
     </>

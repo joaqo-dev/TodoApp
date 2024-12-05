@@ -45,8 +45,14 @@ ul {
   margin: 0;
 }
 
+.container {
+  max-width: 400px; 
+  width: 100%;
+  margin: 0 auto;
+}
 
 .create-todo-button {
+  z-index: 1;
   position: fixed;
   bottom: 20px;  
   right: 20px;   
@@ -101,4 +107,78 @@ ul {
   text-decoration: line-through; 
   color: var(--secondary-color); 
   opacity: 0.3; 
+}
+
+.ModalBackground{
+  background-color: rgba(32, 35, 41, .8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.TodoForm {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  max-width: 350px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.TodoForm-label {
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.TodoForm-textarea {
+  width: 100%;
+  height: 80px;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px;
+  resize: none;
+}
+
+.TodoForm-buttonContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.TodoForm-button {
+  width: 45%;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.TodoForm-button--cancel {
+  color: black;
+}
+
+
+
+.TodoForm-button--add {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.TodoForm-button--add:hover {
+  background-color: var(--secondary-color); 
 }

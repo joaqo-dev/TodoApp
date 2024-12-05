@@ -10,7 +10,7 @@ function TodoProvider({children}){
   // Buscar el valor ingresado en el imput
   const [searchValue, setSearchValue] = React.useState('');
 
-  const [openModal, setOpenModal] = React.useState(true);
+  const [openModal, setOpenModal] = React.useState(false);
 
   
 
@@ -28,7 +28,15 @@ function TodoProvider({children}){
       return todoText.includes(searchText)}
   )
 
-  
+  const addTodo = (text) =>{
+    const newTodos = [...todos];
+    newTodos.push({
+      id: Date.now(),
+      text,
+      completed: false,
+    })
+    saveTodos(newTodos);
+  }
 
   // Alternar el estado de completado de un todo
   const completeTodo = (id) => {
@@ -60,6 +68,7 @@ function TodoProvider({children}){
             deleteTodo,
             openModal,
             setOpenModal,
+            addTodo,
         }}>
             {children}
         </TodoContext.Provider>
